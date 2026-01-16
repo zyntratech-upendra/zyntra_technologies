@@ -1,11 +1,16 @@
 import { useEffect, useState } from "react";
 import Hero from "../components/Hero";
+import ProjectsSection from "../components/ProjectsSection";
+import FaqSection from "../components/FaqSection";
+import FeaturesSection from "../components/FeaturesSection";
 
+/* ================= NAV TABS ================= */
 const tabs = [
   { id: "features", label: "Features" },
   { id: "plans", label: "Plans" },
   { id: "pricing", label: "Pricing" },
   { id: "coverage", label: "What's covered" },
+  { id: "projects", label: "Projects" }, // ✅ INCLUDED
   { id: "faq", label: "FAQs" },
 ];
 
@@ -14,7 +19,8 @@ const Home = () => {
 
   /* ================= SEO ================= */
   useEffect(() => {
-    document.title = "Zyntra Technologies | Complete AI Driven Tech & Marketing Solutions for every industry";
+    document.title =
+      "Zyntra Technologies | Complete AI Driven Tech & Marketing Solutions for every industry";
 
     let meta = document.querySelector("meta[name='description']");
     if (!meta) {
@@ -58,21 +64,23 @@ const Home = () => {
       {/* ================= INTERNAL CSS ================= */}
       <style>
         {`
-        /* ===== SECTION LAYOUT ===== */
         .home-section {
           padding: clamp(80px, 10vw, 140px) 15px;
         }
 
         .home-section.alt {
-          background: #f4fffd;
-        }
+  background: rgba(127, 212, 212, 0.25);
+}
 
-        /* ===== STICKY BOUNDARY ===== */
+[data-theme="dark"] .home-section.alt {
+  background: rgba(30, 58, 68, 0.45);
+}
+
+
         .nav-boundary {
           position: relative;
         }
 
-        /* ===== STICKY NAV ===== */
         .floating-nav {
           position: sticky;
           bottom: 20px;
@@ -93,7 +101,6 @@ const Home = () => {
           gap: 16px;
         }
 
-        /* ===== NAV ITEMS ===== */
         .nav-tab {
           background: none;
           border: none;
@@ -109,14 +116,12 @@ const Home = () => {
           color: #4fa3ff;
         }
 
-        /* ===== ACTIVE STATE ===== */
         .nav-tab.active {
           font-size: 17px;
           font-weight: 600;
           color: #4fa3ff;
         }
 
-        /* ===== BACK TO TOP ===== */
         .back-top {
           margin-left: 12px;
           background: #1e3a44;
@@ -134,7 +139,6 @@ const Home = () => {
           background: #163039;
         }
 
-        /* ===== MOBILE ===== */
         @media (max-width: 768px) {
           .floating-nav {
             display: none !important;
@@ -143,44 +147,97 @@ const Home = () => {
         `}
       </style>
 
+      {/* ================= HERO ================= */}
       <Hero />
 
-      {/* ================= CONTENT ================= */}
+      {/* ================= PAGE SECTIONS ================= */}
       <div className="nav-boundary">
-        {tabs.map((tab, index) => (
-          <section
-            key={tab.id}
-            id={tab.id}
-            data-section={tab.id}
-            className={`home-section ${index % 2 ? "alt" : ""}`}
-            aria-labelledby={`${tab.id}-title`}
-          >
-            <div className="container text-center">
-              <h2
-                id={`${tab.id}-title`}
-                className="fw-bold"
-              >
-                {tab.label}
-              </h2>
-              <p className="text-muted">
-                This is the {tab.label} section content.
-              </p>
-            </div>
-          </section>
-        ))}
-
-        {/* ================= STICKY NAV ================= */}
-        <nav
-          className="floating-nav"
-          aria-label="Page section navigation"
+        {/* FEATURES / PLANS / PRICING / COVERAGE */}
+        {/* ================= FEATURES ================= */}
+        <section
+          id="features"
+          data-section="features"
+          className="home-section"
+          aria-labelledby="features-title"
         >
+          <h2 id="features-title" className="visually-hidden">
+            Features
+          </h2>
+
+          <FeaturesSection/>
+        </section>
+
+        {/* ================= PLANS ================= */}
+        <section id="plans" data-section="plans" className="home-section alt">
+          <div className="container text-center">
+            <h2 className="fw-bold">Plans</h2>
+            <p className="text-muted">
+              Flexible plans designed for startups, enterprises, and growing
+              businesses.
+            </p>
+          </div>
+        </section>
+
+        {/* ================= PRICING ================= */}
+        <section id="pricing" data-section="pricing" className="home-section">
+          <div className="container text-center">
+            <h2 className="fw-bold">Pricing</h2>
+            <p className="text-muted">
+              Transparent pricing with no hidden costs.
+            </p>
+          </div>
+        </section>
+
+        {/* ================= COVERAGE ================= */}
+        <section
+          id="coverage"
+          data-section="coverage"
+          className="home-section alt"
+        >
+          <div className="container text-center">
+            <h2 className="fw-bold">What's Covered</h2>
+            <p className="text-muted">
+              Everything you need to run, scale, and secure your digital
+              business.
+            </p>
+          </div>
+        </section>
+
+        {/* ================= PROJECTS ================= */}
+        <section
+          id="projects"
+          data-section="projects"
+          className="home-section"
+          aria-labelledby="projects-title"
+        >
+          <h2 id="projects-title" className="visually-hidden">
+            Projects
+          </h2>
+          <ProjectsSection />
+        </section>
+
+        {/* ================= FAQ ================= */}
+        <section
+          id="faq"
+          data-section="faq"
+          className="home-section alt"
+          aria-labelledby="faq-title"
+        >
+          <h2 id="faq-title" className="visually-hidden">
+            FAQs
+          </h2>
+
+          {/* FULL FAQ COMPONENT */}
+          <FaqSection />
+        </section>
+
+        {/* ================= FLOATING NAV ================= */}
+        <nav className="floating-nav" aria-label="Page section navigation">
           <div className="floating-nav-inner">
             {tabs.map((tab) => (
               <button
                 key={tab.id}
-                className={`nav-tab ${
-                  active === tab.id ? "active" : ""
-                }`}
+                className={`nav-tab ${active === tab.id ? "active" : ""}`}
                 onClick={() => scrollTo(tab.id)}
                 aria-current={active === tab.id ? "true" : "false"}
               >
@@ -190,9 +247,7 @@ const Home = () => {
 
             <button
               className="back-top"
-              onClick={() =>
-                window.scrollTo({ top: 0, behavior: "smooth" })
-              }
+              onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
               aria-label="Back to top"
             >
               Back to top
